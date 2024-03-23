@@ -8,3 +8,4 @@ if __name__ == "__main__":
     window = ui.MainApp()
     window.show()
     sys.exit(app.exec_())
+
