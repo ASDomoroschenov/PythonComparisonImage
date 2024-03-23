@@ -1,4 +1,6 @@
 .idea/*
 ./.idea/workspace.xml
-bin
-lib
+/bin/*
+/lib/*
+/bin/
+/lib/
