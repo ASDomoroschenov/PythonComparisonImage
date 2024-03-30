@@ -1,11 +1,7 @@
 import cv2 as cv
+import numpy as np
 
-
-def match(image_path, pattern_path):
-    # Загрузка изображений
-    image1 = cv.imread(image_path)
-    image2 = cv.imread(pattern_path)
-
+def match(image1, image2):
     # Преобразование изображений в оттенки серого
     gray_image1 = cv.cvtColor(image1, cv.COLOR_BGR2GRAY)
     gray_image2 = cv.cvtColor(image2, cv.COLOR_BGR2GRAY)
@@ -23,13 +19,20 @@ def match(image_path, pattern_path):
     # Сопоставление дескрипторов
     matches = matcher.match(descriptors1, descriptors2)
 
-    # Сортировка сопоставлений по расстоянию между дескрипторами
-    matches = sorted(matches, key=lambda x: x.distance)
+    # Вычисление дисперсии длин векторов
+    variance_length = np.var([np.linalg.norm(desc) for desc in descriptors1])
+
+    # Вычисление корня из дисперсии
+    std_dev_length = np.sqrt(variance_length)
+
+    # Подсчет количества совпадающих дескрипторов
+    matching_descriptors = [matchItem for matchItem in matches if matchItem.distance < std_dev_length]
 
     # Вычисление схожести изображений
-    similarity = len(matches) / max(len(keypoints1), len(keypoints2))
+    similarity = len(matching_descriptors) / max(len(keypoints1), len(keypoints2))
 
     return similarity
+
 
 
 def show_difference(image1_path, image2_path):

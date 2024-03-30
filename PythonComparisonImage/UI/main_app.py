@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QMainWindow, QTabWidget, QStatusBar, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QTabWidget
 
+import UI.image_classification_tab as classification_tab
 import UI.image_comparison_tab as comparison_tab
 
 
@@ -20,3 +21,6 @@ class MainApp(QMainWindow):
 
         image_comparison_tab = comparison_tab.ImageComparisonTab()
         tab_widget.addTab(image_comparison_tab, "Тестирование алгоритмов")
+
+        image_classification_tab = classification_tab.ImageClassificationTab()
+        tab_widget.addTab(image_classification_tab, "Классификация изображений")
